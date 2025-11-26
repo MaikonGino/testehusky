@@ -1,0 +1,15 @@
+# Dependências do Node (Pesadas, não suba isso!)
+node_modules/
+
+# Logs de erro
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Configurações do IntelliJ (Pessoais)
+.idea/
+*.iml
+
+# Arquivos de Sistema Operacional
+.DS_Store
+Thumbs.db

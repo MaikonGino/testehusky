@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TechInclusive Congress 2025: O maior evento de acessibilidade e tecnologia da América Latina.">
+    <title>TechInclusive Congress 2025</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&family=Outfit:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Paleta Dark Mode de Alto Contraste (WCAG AAA) */
+            --bg-dark: #050505;
+            --primary: #8b5cf6; /* Violeta */
+            --primary-glow: rgba(139, 92, 246, 0.5);
+            --secondary: #06b6d4; /* Ciano */
+            --secondary-glow: rgba(6, 182, 212, 0.5);
+            --accent: #f472b6;
+            --text-main: #ffffff;
+            --text-muted: #cbd5e1;
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(20, 20, 20, 0.6);
+            --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        /* --- 1. ACESSIBILIDADE CORE --- */
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after {
+                animation: none !important; transition: none !important; transform: none !important; scroll-behavior: auto !important;
+            }
+        }
+        :focus-visible { outline: 3px solid var(--secondary); outline-offset: 4px; border-radius: 2px; }
+
+        /* --- 2. BASE & TEXTURA --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif; color: var(--text-main); background-color: var(--bg-dark);
+            overflow-x: hidden; line-height: 1.6;
+        }
+        h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.03em; }
+
+        /* Textura Noise */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Luzes Ambientais */
+        .ambient-light { position: fixed; width: 100vw; height: 100vh; z-index: -1; overflow: hidden; }
+        .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.25; }
+        .orb-1 { width: 500px; height: 500px; background: var(--primary); top: -200px; left: -100px; animation: float 10s infinite alternate; }
+        .orb-2 { width: 400px; height: 400px; background: var(--secondary); bottom: -100px; right: -100px; animation: float 14s infinite alternate-reverse; }
+        @keyframes float { to { transform: translate(40px, 60px); } }
+
+        /* --- 3. UI COMPONENTS --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        .section-header { text-align: center; margin-bottom: 4rem; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 1rem; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .btn-glow {
+            display: inline-flex; align-items: center; justify-content: center; padding: 14px 32px;
+            background: linear-gradient(135deg, var(--primary), #4c1d95); color: white; border-radius: 50px;
+            text-decoration: none; font-weight: 600; border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 0 20px var(--primary-glow); transition: all 0.3s var(--ease-out); cursor: pointer;
+        }
+        .btn-glow:hover { transform: translateY(-3px); box-shadow: 0 0 40px var(--primary-glow); }
+
+        /* Header */
+        header { position: fixed; top: 0; width: 100%; z-index: 100; padding: 20px 0; transition: 0.3s; }
+        header.scrolled { background: rgba(5, 5, 5, 0.9); backdrop-filter: blur(16px); border-bottom: 1px solid var(--glass-border); padding: 15px 0; }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: white; text-decoration: none; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: white; }
+
+        /* --- 4. HERO --- */
+        .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 80px; perspective: 1000px; }
+        .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: center; }
+        .hero h1 { font-size: clamp(3rem, 5vw, 5rem); line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero h1 span { color: var(--primary); }
+        .glass-card-3d {
+            width: 100%; height: 500px; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
+            border-radius: 24px; position: relative; overflow: hidden; transform-style: preserve-3d;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5); transition: transform 0.1s;
+        }
+        .glass-card-3d img { width: 100%; height: 100%; object-fit: cover; }
+        .badge { position: absolute; background: rgba(0,0,0,0.8); border: 1px solid var(--glass-border); padding: 8px 16px; border-radius: 50px; font-weight: 600; font-size: 0.9rem; }
+        .b1 { top: 20px; right: 20px; border-color: var(--secondary); transform: translateZ(40px); }
+        .b2 { bottom: 30px; left: 20px; border-color: var(--primary); transform: translateZ(60px); }
+
+        /* --- 5. SPEAKERS --- */
+        .speakers { padding: 100px 0; }
+        .speakers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .speaker-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--glass-border); padding: 2rem; border-radius: 20px; text-align: center;
+            transition: 0.3s;
+        }
+        .speaker-card:hover { border-color: var(--secondary); transform: translateY(-10px); }
+        .speaker-img {
+            width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 1.5rem;
+            border: 2px solid var(--glass-border); padding: 4px;
+        }
+        .speaker-role { color: var(--secondary); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        .speaker-company { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* --- 6. AGENDA --- */
+        .agenda { padding: 100px 0; background: rgba(255,255,255,0.01); }
+        .timeline { max-width: 800px; margin: 0 auto; position: relative; }
+        .timeline::before {
+            content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary)); opacity: 0.3;
+        }
+        .timeline-item { display: flex; gap: 2rem; margin-bottom: 2rem; position: relative; }
+        .time-badge {
+            min-width: 100px; text-align: right; font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700; color: var(--text-main); padding-top: 5px;
+        }
+        .timeline-content {
+            flex: 1; background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 16px;
+            border: 1px solid var(--glass-border); transition: 0.3s;
+        }
+        .timeline-content:hover { background: rgba(255,255,255,0.05); border-color: var(--primary); }
+        .timeline-dot {
+            position: absolute; left: 14px; top: 20px; width: 14px; height: 14px;
+            background: var(--bg-dark); border: 2px solid var(--primary); border-radius: 50%; z-index: 2;
+        }
+
+        /* --- 7. NEW FORM SECTION (PREMIUM) --- */
+        .registration {
+            padding: 120px 0;
+            position: relative;
+            /* Cyber Grid Background */
+            background-image:
+                    linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: center;
+        }
+
+        /* Vignette para focar no centro */
+        .registration::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 0%, var(--bg-dark) 90%);
+            pointer-events: none;
+        }
+
+        .form-container-glow {
+            position: relative; max-width: 500px; margin: 0 auto; z-index: 10;
+        }
+
+        /* O brilho colorido atrás do form */
+        .form-container-glow::before {
+            content: ''; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            border-radius: 30px; filter: blur(25px); opacity: 0.3; z-index: -1;
+            animation: pulseGlow 5s infinite alternate;
+        }
+
+        @keyframes pulseGlow { 0% { opacity: 0.3; } 100% { opacity: 0.5; } }
+
+        .form-box {
+            background: rgba(15, 15, 20, 0.85); /* Fundo bem escuro */
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 3rem; border-radius: 24px;
+            box-shadow:
+                    0 0 0 1px rgba(255,255,255,0.05) inset,
+                    0 20px 50px rgba(0,0,0,0.5);
+            position: relative; overflow: hidden;
+        }
+
+        /* Detalhe de linha brilhante no topo do form */
+        .form-box::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+        }
+
+        .input-group { margin-bottom: 2rem; position: relative; }
+
+        .modern-input {
+            width: 100%; padding: 1rem 0;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            color: white; font-size: 1.1rem; transition: 0.3s;
+            border-radius: 0;
+        }
+
+        .modern-input:focus {
+            outline: none;
+            border-bottom-color: var(--secondary);
+            background: linear-gradient(to bottom, transparent, rgba(6, 182, 212, 0.05));
+        }
+
+        .floating-label {
+            position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+            color: var(--text-muted); font-size: 1rem; pointer-events: none; transition: 0.3s;
+        }
+
+        /* Animação do Label subindo */
+        .modern-input:focus ~ .floating-label,
+        .modern-input:not(:placeholder-shown) ~ .floating-label {
+            top: -10px; font-size: 0.8rem; color: var(--secondary); font-weight: 600;
+        }
+
+        /* Decorative dots nos cantos do form */
+        .deco-dot {
+            position: absolute; width: 6px; height: 6px; background: white; border-radius: 50%; opacity: 0.5;
+        }
+        .d-tl { top: 15px; left: 15px; }
+        .d-tr { top: 15px; right: 15px; }
+        .d-bl { bottom: 15px; left: 15px; }
+        .d-br { bottom: 15px; right: 15px; }
+
+        /* --- 8. FOOTER PERSONALIZADO --- */
+        footer {
+            padding: 3rem 0; border-top: 1px solid var(--glass-border); text-align: center;
+            color: var(--text-muted); font-size: 0.95rem;
+        }
+
+        .mg-link {
+            font-family: 'Outfit', sans-serif; font-weight: 700; color: var(--secondary);
+            text-decoration: none; position: relative; margin-left: 5px; transition: 0.3s;
+        }
+        .mg-link:hover { color: var(--primary); text-shadow: 0 0 10px rgba(139, 92, 246, 0.5); }
+        .mg-link::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0;
+            background-color: var(--primary); transition: width 0.3s;
+        }
+        .mg-link:hover::after { width: 100%; }
+
+        /* Modal */
+        dialog { background: transparent; border: none; padding: 0; max-width: 450px; width: 90%; margin: auto; color: white; }
+        dialog::backdrop { background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); }
+        .modal-box {
+            background: #0f0f11; border: 1px solid var(--glass-border); border-top: 4px solid var(--primary);
+            padding: 2.5rem; border-radius: 24px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+        }
+
+        @media (max-width: 768px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .nav-links { display: none; }
+            .timeline::before { left: 0; }
+            .timeline-item { flex-direction: column; gap: 0.5rem; padding-left: 20px; }
+            .time-badge { text-align: left; margin-bottom: 5px; }
+            .timeline-dot { left: -5px; top: 5px; }
+            .registration { background-size: 30px 30px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="noise-overlay"></div>
+<div class="ambient-light">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+</div>
+
+<dialog id="successModal">
+    <div class="modal-box">
+        <h2 style="margin-bottom: 1rem;">Inscrição Confirmada</h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">
+            Você garantiu seu lugar no TechInclusive Congress 2025. Enviamos os detalhes para seu e-mail.
+        </p>
+        <button class="btn-glow" id="closeBtn" style="width: 100%">Fechar</button>
+    </div>
+</dialog>
+
+<header id="header">
+    <div class="container">
+        <nav>
+            <a href="#" class="logo">Tech<span style="color: var(--primary)">Inclusive</span></a>
+            <ul class="nav-links">
+                <li><a href="#speakers">Palestrantes</a></li>
+                <li><a href="#agenda">Programação</a></li>
+                <li><a href="#register" style="color: var(--secondary)">Inscrever-se</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="content">
+                <h4 style="color: var(--secondary); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 2px;">25 - 27 DE NOVEMBRO DE 2025</h4>
+                <h1>O Futuro da<br><span>Acessibilidade.</span></h1>
+                <p style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 2.5rem; max-width: 500px;">
+                    Junte-se a líderes da Google, W3C e Microsoft no maior congresso de inclusão digital e engenharia de software da América Latina.
+                </p>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="#register" class="btn-glow">Garantir Ingresso</a>
+                    <a href="#agenda" style="padding: 14px 24px; color: white; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 50px; font-weight: 500;">Ver Programação</a>
+                </div>
+            </div>
+
+            <div class="hero-visual" id="tiltCard">
+                <div class="glass-card-3d">
+                    <img src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?auto=format&fit=crop&q=80&w=600"
+                         alt="Palestrante em palco iluminado com audiência atenta" loading="eager">
+                    <div class="badge b1">Edição Híbrida</div>
+                    <div class="badge b2">+50 Palestrantes</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="speakers" id="speakers">
+        <div class="container">
+            <div class="section-header">
+                <h2>Keynote Speakers</h2>
+                <p style="color: var(--text-muted);">Aprenda com quem define os padrões da web mundial.</p>
+            </div>
+            <div class="speakers-grid">
+                <div class="speaker-card">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200" alt="Foto de Sarah Connor" class="speaker-img">
+                    <div class="speaker-role">W3C Director</div>
+                    <h3>Sarah Connor</h3>
+                    <p class="speaker-company">Acessibilidade na IA Generativa</p>
+                </div>
+                <div class="speaker-card">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=200" alt="Foto de Michael Chen" class="speaker-img">
+                    <div class="speaker-role">Google Lead Eng</div>
+                    <h3>Michael Chen</h3>
+                    <p class="speaker-company">Core Web Vitals & a11y</p>
+                </div>
+                <div class="speaker-card">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200" alt="Foto de Elena Rodriguez" class="speaker-img">
+                    <div class="speaker-role">UX Researcher</div>
+                    <h3>Elena Rodriguez</h3>
+                    <p class="speaker-company">Design Inclusivo na Prática</p>
+                </div>
+                <div class="speaker-card">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=200" alt="Foto de David Kim" class="speaker-img">
+                    <div class="speaker-role">Frontend Master</div>
+                    <h3>David Kim</h3>
+                    <p class="speaker-company">React Acessível (Hands-on)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="agenda" id="agenda">
+        <div class="container">
+            <div class="section-header">
+                <h2>Programação</h2>
+                <p style="color: var(--text-muted);">Três dias de imersão total em tecnologia assistiva.</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="time-badge">09:00</div>
+                    <div class="timeline-content">
+                        <h3 style="color: var(--primary);">Abertura Oficial</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Boas vindas e panorama do mercado de tecnologia inclusiva em 2025.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="time-badge">10:30</div>
+                    <div class="timeline-content">
+                        <h3 style="color: white;">Painel: A LBI e as Empresas</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Como a Lei Brasileira de Inclusão está moldando os departamentos de TI das grandes corporações.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="time-badge">14:00</div>
+                    <div class="timeline-content">
+                        <h3 style="color: white;">Workshop: Husky & CI/CD</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Implementando barreiras de qualidade automatizadas com axe-core e github actions.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="time-badge">16:30</div>
+                    <div class="timeline-content">
+                        <h3 style="color: var(--secondary);">Networking Coffee</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Conexão com recrutadores e especialistas da área.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="registration" id="register">
+        <div class="container">
+            <div class="section-header">
+                <h2>Inscrição Gratuita</h2>
+                <p style="color: var(--text-muted);">Garanta sua credencial VIP.</p>
+            </div>
+
+            <div class="form-container-glow">
+                <div class="form-box">
+                    <div class="deco-dot d-tl"></div><div class="deco-dot d-tr"></div>
+                    <div class="deco-dot d-bl"></div><div class="deco-dot d-br"></div>
+
+                    <form id="regForm">
+                        <div class="input-group">
+                            <input type="text" id="name" class="modern-input" placeholder=" " required autocomplete="name">
+                            <label for="name" class="floating-label">Nome Completo</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="email" class="modern-input" placeholder=" " required autocomplete="email">
+                            <label for="email" class="floating-label">E-mail Corporativo</label>
+                        </div>
+                        <button type="submit" class="btn-glow" style="width: 100%; margin-top: 1rem;">Confirmar Presença</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>
+            &copy; 2025 TechInclusive.
+            Powered by
+            <a href="https://portfoliomaikongino.web.app" target="_blank" class="mg-link">MG Produções</a>.
+        </p>
+    </div>
+</footer>
+
+<script>
+    // Header Scroll
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('header');
+        if(window.scrollY > 50) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
+    });
+
+    // Modal Logic
+    const modal = document.getElementById('successModal');
+    const form = document.getElementById('regForm');
+    const closeBtn = document.getElementById('closeBtn');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('button');
+        const originalText = btn.innerText;
+        btn.innerText = "Processando...";
+
+        setTimeout(() => {
+            btn.innerText = originalText;
+            modal.showModal();
+            form.reset();
+        }, 1000);
+    });
+    closeBtn.addEventListener('click', () => modal.close());
+
+    // 3D Tilt Logic
+    const hero = document.querySelector('.hero');
+    const card = document.querySelector('.glass-card-3d');
+    const motionOk = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+
+    if(motionOk && window.innerWidth > 768) {
+        hero.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 30;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 30;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+        hero.addEventListener('mouseleave', () => {
+            card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+        });
+    }
+</script>
+</body>
+</html>
