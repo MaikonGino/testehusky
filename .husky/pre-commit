@@ -1,1 +1,3 @@
-npx pa11y ./index.html
+. "$(dirname -- "$0")/_/husky.sh"
+
+npx pa11y public/index.html
